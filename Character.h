@@ -14,6 +14,15 @@ class Character{
         std::vector <std::string> inventory;
 
 
+        Character(){
+            name = "unknown";
+            health = 100;
+            attack = 10;
+            defense = 5;
+            level = 1;
+            XP = 0;
+        }
+
         Character(std::string name, float health, float attack, float defense){
             this -> name = name;
             this -> health = health;
