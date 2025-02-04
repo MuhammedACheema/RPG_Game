@@ -12,6 +12,7 @@ class Character{
         int level;
         int XP;
         std::vector <std::string> inventory;
+        int speed;
 
 
         Character(){
@@ -21,13 +22,15 @@ class Character{
             defense = 5;
             level = 1;
             XP = 0;
+            speed = 5;
         }
 
-        Character(std::string name, float health, float attack, float defense){
+        Character(std::string name, float health, float attack, float defense, int speed){
             this -> name = name;
             this -> health = health;
             this -> attack = attack;
             this -> defense = defense;
+            this -> speed = speed;
             level = 1;
             XP = 0;
         }
@@ -40,6 +43,7 @@ class Character{
                 health += 10; 
                 defense += 2;
                 attack += 5;
+                speed += 1;
                 std:: cout << "Congrats you leveled up you are now level: " << level << std::endl;
             }
         }
