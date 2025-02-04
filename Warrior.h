@@ -5,11 +5,13 @@
 
 class Warrior: public Character {
     public:
+
         Warrior(std::string n){
             this -> name = n;
             this -> health = 150;
             this -> attack = 20;
             this -> defense = 15;
+            this -> speed = 10;
         }
 
         void specialAbilities(){
