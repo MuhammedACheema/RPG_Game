@@ -14,6 +14,8 @@ class Mage: public Character{
         this -> defense = 5;
         this -> Mana = Mana; //Mana Points allows the Mage to cast spells.
         this -> speed = 12;
+        this -> dodge = false;
+        this -> maxhealth = 90;
         
     }
 
@@ -65,14 +67,14 @@ class Mage: public Character{
         }
 
         // Prevent overhealing
-        if (health == 90) {  // Assuming max HP is 90 for a Mage
+        if (health == maxhealth) {  // Assuming max HP is 90 for a Mage
             std::cout << name << " is already at full health! Heal was not cast." << std::endl;
             return;
         }
 
         // Ensure health does not exceed max HP
-        if (health + healAmount > 90) {
-            health = 90; // Set health to max HP instead of exceeding it
+        if (health + healAmount > maxhealth) {
+            health = maxhealth; // Set health to max HP instead of exceeding it
         } else {
             health += healAmount;
         }
