@@ -16,7 +16,10 @@ class Character{
         int speed;
         bool dodge;
         int maxhealth;
+        int dodgeTurns;
 
+        // ✅ Make the class polymorphic by adding a virtual destructor
+        virtual ~Character() {}  // 👈 This makes `Character` polymorphic
 
         Character(){
             name = "unknown";
@@ -28,6 +31,7 @@ class Character{
             speed = 5;
             dodge = false;
             maxhealth = 100;
+            dodgeTurns = 0;
         }
 
         Character(std::string name, float health, float attack, float defense, int speed, int maxhealth){
@@ -40,6 +44,7 @@ class Character{
             level = 1;
             XP = 0;
             dodge = false;
+            dodgeTurns = 0;
         }
 
         void levelup(){
@@ -62,20 +67,22 @@ class Character{
         }
 
         void takeDamage(float enemyattack){
+            if (dodge) {
+                std::cout << name << " dodged the attack!" << std::endl;
+                dodgeTurns--;  // ✅ Reduce dodge duration
+                if (dodgeTurns == 0) {
+                    dodge = false;  // ✅ Remove dodge after the turn
+                    std::cout << name << " is no longer dodging!" << std::endl;
+                }
+                return;  // ✅ Avoid taking damage
+            }
+
             float damage = enemyattack - defense;
-            if (damage < 0){
-                damage = 1;
-            }
-
-            health = health - damage;
-
-            std::cout << name << "took " << damage << "damage, you have a remaining hp of " << health << std::endl;
-
-            if(health <= 0 ){
-                std::cout << name << "has been defeated!" << std::endl;
-            }
-            
+            if (damage < 1) damage = 1;
+            health -= damage;
+            std::cout << name << " took " << damage << " damage! Remaining HP: " << health << std::endl;
         }
+
 
         void attackenemy(Character &enemy){
             std::cout << name << "attacks" << enemy.name << std::endl;
