@@ -68,7 +68,7 @@ class Warrior: public Character {
         void regainStamina() {
             stamina += 5;
             if (stamina > 30) stamina = 30; // Prevent exceeding max mana
-            std::cout << name << " regenerates 5 Stamina. Current MP: " << stamina << std::endl;
+            std::cout << name << " regenerates 5 Stamina. Current Stamina: " << stamina << std::endl;
         }
 };
 

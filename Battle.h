@@ -25,14 +25,69 @@ class Battle{
 
                 if (choice == 1) {
                     player.attackenemy(enemy);
+                    if(player.name == "Mage"){
+                        dynamic_cast<Mage&>(player).regenerateMana();
+                    }
+                    else if(player.name == "Warrior"){
+                        dynamic_cast<Warrior&>(player).regainStamina();
+                    }
                 } 
                 else if (choice == 2) { //edit this so that you can choose the attack type
                     if (player.name == "Warrior") {
-                        dynamic_cast<Warrior&>(player).powerStrike(enemy);
+                        int warrior_special;
+                        std::cout << "pick your special attack" << std::endl;
+                        dynamic_cast<Warrior&>(player).specialAbilities();
+                        std::cout << "[1] Power Strike\n";
+                        std::cout << "[2] Shield Block\n";
+                        std::cout << "Enter your choice: ";
+                        std::cin >> warrior_special;
+                        dynamic_cast<Warrior&>(player).regainStamina();
+
+                        if(warrior_special == 1){
+                            dynamic_cast<Warrior&>(player).shieldBlock();
+                        }
+                        else if(warrior_special == 2){
+                            dynamic_cast<Warrior&>(player).powerStrike(enemy);
+                        }
                     } else if (player.name == "Mage") {
-                        dynamic_cast<Mage&>(player).fireBall(enemy);
+                        int mage_special;
+                        std::cout << "pick your special attack" << std::endl;
+                        std::cout << "[1] Arcane Shield\n";
+                        std::cout << "[2] Fire Ball\n";
+                        std::cout << "[3] Heal\n";
+                        std::cout << "Enter your choice: ";
+                        std::cin >> mage_special;
+                        dynamic_cast<Mage&>(player).regenerateMana();
+
+                        if(mage_special == 1){
+                            dynamic_cast<Mage&>(player).arcaneShield();
+                        }
+                        else if(mage_special == 2){
+                            dynamic_cast<Mage&>(player).fireBall(enemy);
+                        }
+                        else if(mage_special == 3){
+                            dynamic_cast<Mage&>(player).heal();
+                        }
+
                     } else if (player.name == "Rogue") {
                         dynamic_cast<Rogue&>(player).Backstab(enemy);
+                        int rogue_special;
+                        std::cout << "pick your special attack" << std::endl;
+                        std::cout << "[1] Critical Hit\n";
+                        std::cout << "[2] Speedy Punch\n";
+                        std::cout << "[3] Evasive Maneuver\n";
+                        std::cout << "Enter your choice: ";
+                        std::cin >> rogue_special;
+
+                        if(rogue_special == 1){
+                            dynamic_cast<Rogue&>(player).criticalHit(enemy);
+                        }
+                        else if(rogue_special == 2){
+                            dynamic_cast<Rogue&>(player).speedyPunch(enemy);
+                        }
+                        else if(rogue_special == 3){
+                            dynamic_cast<Rogue&>(player).evasiveManeuver();
+                        }
                     }
                 } 
                 else if (choice == 3) {
@@ -45,6 +100,14 @@ class Battle{
                     std::cout << "Attack: " << player.attack << std::endl;
                     std::cout << "Defense: " << player.defense << std::endl;
                     std::cout << "Speed: " << player.speed << std::endl;
+                    if(player.name == "Warrior"){
+                        std::cout << "Stamina: " << dynamic_cast<Warrior&>(player).stamina << std::endl;
+                    }
+
+                    else if(player.name == "Mage"){
+                        std::cout << "Mana: " << dynamic_cast<Mage&>(player).Mana << std::endl;
+                    }
+
                     continue;  // Skip enemy turn if checking stats
                 }
 

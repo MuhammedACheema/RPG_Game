@@ -12,7 +12,7 @@ class Mage: public Character{
         this -> health = 90;
         this -> attack = 10;
         this -> defense = 5;
-        this -> Mana = Mana; //Mana Points allows the Mage to cast spells.
+        this -> Mana = 15; //Mana Points allows the Mage to cast spells.
         this -> speed = 12;
         this -> dodge = false;
         this -> maxhealth = 90;

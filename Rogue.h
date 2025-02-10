@@ -63,9 +63,10 @@ class Rogue: public Character{
             Firstturn = false;
         }
 
-        void basicAttack(Character &enemy){
+        void speedyPunch(Character &enemy){
             std::cout << "Thats a good punch" << std::endl;
-            enemy.takeDamage(attack);
+            int damage = attack * 1.5;
+            enemy.takeDamage(damage);
             Firstturn = false;
         }
 
