@@ -4,6 +4,12 @@
 #include <vector>
 #include <random>
 
+struct Item {
+    std::string name;   // "Health Potion"
+    std::string type;   // "Potion"
+    int effect;         // 30 (heals 30 HP)
+};
+
 class Character{
     public:
         std::string name;
@@ -12,7 +18,7 @@ class Character{
         float defense;
         int level;
         int XP;
-        std::vector <std::string> inventory;
+        std::vector <Item> inventory;
         int speed;
         bool dodge;
         int maxhealth;
@@ -89,22 +95,46 @@ class Character{
             enemy.takeDamage(attack);
         }
 
-        void additems(std::string items){
-            inventory.push_back(items);
+        void additems(std::string items, std::string type, int effect){
+            Item new_item = {items,type,effect};
+            inventory.push_back(new_item);
+            std::cout << "Added " << name << " to inventory!" << std::endl;
         }
 
-        void showInventory(){
-            std::cout << name << "'s Inventory:\n"; //will tell you which chatacters inventory it is
+        void useitems(std::string item){
+            for(int i = 0; i < inventory.size(); i++){
+                if(inventory[i].name == item){
+                    if(inventory[i].type == "potion"){
+                        health += inventory[i].effect;
+                        if (health > maxhealth) health = maxhealth;  // Prevent overhealing
+                        std::cout << name << " used " << item << "! Restored " << inventory[i].effect << " HP.\n";
+                    }
+                }
+                else if(inventory[i].name == item){
+                    if(inventory[i].type == "weapon"){
+                        attack += inventory[i].effect;
+                        std::cout << name << " equipped " << item << "! Attack increased by " << inventory[i].effect << ".\n";
+                }
+                inventory.erase(inventory.begin() + i);  // Remove item if used
+                return;
+                }
+            }
+            std::cout << "Item not found in inventory!\n";
+        }
+
+        void showInventory() {
+            std::cout << name << "'s Inventory:\n";
 
             if (inventory.empty()) { 
                 std::cout << "Inventory is empty.\n";
                 return;
             }
 
-            for (int i = 0; i < inventory.size(); i++){
-                std::cout << "-" <<  inventory[i] << std::endl;
+            for (const auto& item : inventory) {
+                std::cout << "- " << item.name << " (" << item.type << ") → Effect: " << item.effect << "\n";
             }
         }
+
 
          // implement a doging chance where its speed and a random number from 1 to a 100 and if the speed is greater or equal you can dodge and if smaller, then you get damage. 
         void dodgeAttack(){
