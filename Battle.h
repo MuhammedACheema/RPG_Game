@@ -9,7 +9,9 @@
 
 class Battle{
     public:
-        static void startBattle(Character &player, Character &enemy){
+
+        static bool startBattle(Character &player, Character &enemy){
+            bool win;
             std::cout << "\nA wild " << enemy.name << " appears! Prepare for battle!\n" << std::endl;
 
             while (player.health > 0 && enemy.health > 0) {
@@ -19,6 +21,7 @@ class Battle{
                 std::cout << "[2] Special Ability\n";
                 std::cout << "[3] Defend\n";
                 std::cout << "[4] Check Stats\n";
+                std::cout << "[5] Use Item\n";
                 std::cout << "Enter your choice: ";
                 int choice;
                 std::cin >> choice;
@@ -110,10 +113,21 @@ class Battle{
 
                     continue;  // Skip enemy turn if checking stats
                 }
+                else if (choice == 5) { // Use an item
+                    std::cout << "Your Inventory:\n";
+                    player.showInventory();
+                    std::cout << "Enter item name to use: ";
+                    std::string itemName;
+                    std::cin >> itemName;
+                    player.useitems(itemName);
+                }
+
 
                 // Check if enemy is defeated
                 if (enemy.health <= 0) {
                     std::cout << enemy.name << " has been defeated! You win!\n";
+                    win = true;
+                    player.gainXP(50);
                     break;
                 }
 
@@ -131,10 +145,40 @@ class Battle{
                 // Check if player is defeated
                 if (player.health <= 0) {
                     std::cout << "You have been defeated! Game Over.\n";
+                    win = false;
+                    
                     break;
                 }
             }
+
+            return win;
         }
+
+        void generateEnemy();
+
+        void dungeonMode(Character &player) {
+            int battles = 5;  // Fight 5 enemies in a row
+
+            while (battles > 0) {
+                Character enemy = generateEnemy();  // ✅ Generate a random enemy
+                bool result = startBattle(player, enemy);  // ✅ Store battle result
+
+                if (!result) {  // ✅ If the player loses
+                    std::cout << "Game Over! " << player.name << " was defeated by " << enemy.name << ".\n";
+                    return;  // ✅ Exit dungeon mode
+                } 
+                else {  // ✅ If the player wins
+                    std::cout << "Good job! " << player.name << " defeated " << enemy.name << "!\n";
+                }
+
+                battles -= 1;  // ✅ Reduce remaining battles
+            }
+
+            std::cout << "Congratulations! " << player.name << " has completed the dungeon!\n";
+        }
+
+
+
 };
 
 
