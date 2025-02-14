@@ -9,6 +9,7 @@
 
 class Battle{
     public:
+        Item reward = {"Health of a Million Soldiers", "potion", 100};
 
         static bool startBattle(Character &player, Character &enemy){
             bool win;
@@ -192,7 +193,9 @@ class Battle{
             }
 
             std::cout << "Congratulations! " << player.name << " has completed the dungeon!\n";
-            // Provide them a new weapon for winning
+
+            // Provide them a reward for winning
+            player.additems(reward);
         }
 
 
