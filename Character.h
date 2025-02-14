@@ -95,10 +95,9 @@ class Character{
             enemy.takeDamage(attack);
         }
 
-        void additems(std::string items, std::string type, int effect){
-            Item new_item = {items,type,effect};
-            inventory.push_back(new_item);
-            std::cout << "Added " << name << " to inventory!" << std::endl;
+        void additems(Item item){
+            inventory.push_back(item);
+            std::cout << "Added " << item.name << " to inventory!" << std::endl;
         }
 
         void useitems(std::string item){

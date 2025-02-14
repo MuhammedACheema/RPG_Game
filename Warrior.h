@@ -55,10 +55,10 @@ class Warrior: public Character {
             defense += 5; //temp defense boost
         }
 
-        void equipWeapon(Item &sword){
+        void equipWeapon(Item sword){
             std::cout << name << ", you have equipped a " << sword.name << "!" << std::endl;
             if (std::find(inventory.begin(), inventory.end(), sword) == inventory.end()) {
-                additems(sword.name, sword.type, sword.effect);
+                additems(sword);
             } else {
                 std::cout << sword.name << " is in the vector." << std::endl;
             }
