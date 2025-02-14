@@ -154,27 +154,45 @@ class Battle{
             return win;
         }
 
-        void generateEnemy();
+        Character* generateEnemy(){
+            int enemyType = rand() % 5;  // Random enemy selection
+            if (enemyType == 0) {
+                return new Character("Goblin", 80, 12, 5, 7, 80);
+            } else if (enemyType == 1) {
+                return new Character("Hunter", 100, 15, 8, 25, 100);
+            }
+            else if (enemyType == 2) {
+                    return new Character("Skeleton", 90, 13, 9, 7, 90);
+            }
+            else if (enemyType == 3) {
+                return new Character("Barbarian", 110, 20, 9, 7, 110);
+            }
+        }
+
 
         void dungeonMode(Character &player) {
-            int battles = 5;  // Fight 5 enemies in a row
+            int battles = 3;  // Fight 3 enemies in a row
 
-            while (battles > 0) {
-                Character enemy = generateEnemy();  // ✅ Generate a random enemy
-                bool result = startBattle(player, enemy);  // ✅ Store battle result
+            while (battles > 1) {
+                Character* enemy = generateEnemy();  // ✅ Generate a random enemy
+                bool result = startBattle(player, *enemy);  // ✅ Store battle result
 
                 if (!result) {  // ✅ If the player loses
-                    std::cout << "Game Over! " << player.name << " was defeated by " << enemy.name << ".\n";
+                    std::cout << "Game Over! " << player.name << " was defeated by " << enemy->name << ".\n";
+                    delete enemy;
+
                     return;  // ✅ Exit dungeon mode
                 } 
                 else {  // ✅ If the player wins
-                    std::cout << "Good job! " << player.name << " defeated " << enemy.name << "!\n";
+                    std::cout << "Good job! " << player.name << " defeated " << enemy->name << "!\n";
+                    delete enemy;
                 }
 
                 battles -= 1;  // ✅ Reduce remaining battles
             }
 
             std::cout << "Congratulations! " << player.name << " has completed the dungeon!\n";
+            // Provide them a new weapon for winning
         }
 
 
