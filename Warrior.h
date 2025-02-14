@@ -55,13 +55,12 @@ class Warrior: public Character {
             defense += 5; //temp defense boost
         }
 
-        void equipWeapon(std::string sword){
-            std::cout << name << ", you have equipped a " << sword << "!" << std::endl;
+        void equipWeapon(Item &sword){
+            std::cout << name << ", you have equipped a " << sword.name << "!" << std::endl;
             if (std::find(inventory.begin(), inventory.end(), sword) == inventory.end()) {
-                additems(sword);
-                attack += 5;
+                additems(sword.name, sword.type, sword.effect);
             } else {
-                std::cout << sword << " is in the vector." << std::endl;
+                std::cout << sword.name << " is in the vector." << std::endl;
             }
         }
 
