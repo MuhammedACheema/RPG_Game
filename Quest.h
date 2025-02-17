@@ -8,6 +8,7 @@
 #include "Rogue.h"
 #include "Battle.h"
 
+
 class Quest: public Battle{
     public:
         int battle_counter = 6;

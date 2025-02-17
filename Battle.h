@@ -6,10 +6,14 @@
 #include "Character.h"
 #include "Warrior.h"
 #include "Rogue.h"
+#include "King.h"
+
+King king("King Xerath",30);
 
 class Battle{
     public:
         Item reward = {"Health of a Million Soldiers", "potion", 100};
+        Item crown = {"Crown of Xerath", "weapon", 40};
 
         static bool startBattle(Character &player, Character &enemy){
             bool win;
@@ -136,8 +140,25 @@ class Battle{
                 std::cout << "\n" << enemy.name << "'s Turn!\n";
                 int enemyChoice = rand() % 2;
                 if (enemyChoice == 0) {
-                    std::cout << enemy.name << " attacks!\n";
-                    player.takeDamage(enemy.attack);
+                    if(King* king = dynamic_cast<King*>(&enemy)) {
+                        int kingChoice = rand() % 3;
+                        if(kingChoice == 0){
+                            std::cout << enemy.name << " attacks!\n";
+                            king->royalSlam(player);  // Royal Slam already does damage internally
+                        }
+                        else if(kingChoice == 1){
+                            std::cout << enemy.name << " attacks!\n";
+                            king->royalDecree(player); 
+                        }
+                        else if(kingChoice == 2){
+                            std::cout << enemy.name << " attacks!\n";
+                            player.takeDamage(enemy.attack);
+                        }
+                    }
+                    else{
+                        std::cout << enemy.name << " attacks!\n";
+                        player.takeDamage(enemy.attack);
+                    }
                 } else {
                     std::cout << enemy.name << " defends, increasing their defense!\n";
                     enemy.defense += 2;
@@ -156,7 +177,7 @@ class Battle{
         }
 
         Character* generateEnemy(){
-            int enemyType = rand() % 5;  // Random enemy selection
+            int enemyType = rand() % 4;  // Random enemy selection
             if (enemyType == 0) {
                 return new Character("Goblin", 80, 12, 5, 7, 80);
             } else if (enemyType == 1) {
@@ -198,8 +219,16 @@ class Battle{
             player.additems(reward);
         }
 
-
-
+        void finalBossMode(Character &player){
+            bool results = Battle::startBattle(player, king);
+            if(results){
+                std::cout << "Congratulations " << player.name << " you have defeated the king, and you will forever be remembered, you have gained the Crown of Xerath\n";
+                player.additems(crown);
+            }
+            else{
+                std::cout << "You have doomed us all you failure, King Xeraths wrath will handle us all\n";
+            }
+        }
 };
 
 
